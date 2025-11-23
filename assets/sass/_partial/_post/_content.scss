@@ -5,6 +5,11 @@
 .post-content {
   word-wrap: break-word;
 
+  // 图片高度
+  img {
+    max-height: 55vh;
+  }
+
   @for $i from 1 through 6 {
     h#{$i} {
       font-weight: 400;

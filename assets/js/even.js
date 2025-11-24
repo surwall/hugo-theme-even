@@ -141,7 +141,7 @@ Even.fancybox = function() {
   Fancybox.bind("[data-fancybox]", {
     Carousel: {
       Thumbs: {
-        showOnStart: false,
+        showOnStart: true,
         // type: "classic"
       },
       Toolbar: {
@@ -149,7 +149,17 @@ Even.fancybox = function() {
           left : ["counter"],
           right: ["zoomIn", "zoomOut","reset","thumbs",'close']
         }
-      }
+      },
+      Arrows: false,
+      // https://fancyapps.com/carousel/guides/responsive-design/#breakpoints
+      breakpoints: {
+        "(min-width: 768px)": {
+          Arrows: true,
+          Thumbs: {
+            showOnStart: false
+          }
+        },
+      },
     },
     // placeFocusBack: false
   });

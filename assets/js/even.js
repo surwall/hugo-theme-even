@@ -1,6 +1,7 @@
 'use strict';
 
 const Even = {};
+let achorClicked = false;
 
 Even.backToTop = function() {
   const $backToTop = $('#back-to-top');
@@ -106,12 +107,24 @@ Even._initToc = function() {
     return -1;
   };
 
+  // trigger when scrolling
   $(window).scroll(function() {
+    if (achorClicked) {
+      achorClicked = false;
+      return;
+    }
+
     const scrollTop = $(window).scrollTop();
     const activeTocIndex = searchActiveTocIndex(headerLinksOffsetForSearch, scrollTop);
 
     $($toclink).removeClass('active');
     $($tocLinkLis).removeClass('has-active');
+    // console.log(scrollTop, $(window).height(), $(document).height())
+    if(scrollTop + $(window).height() + 5 >= $(document).height()) {
+      $toclink.last().addClass('active');
+      $tocLinkLis.last().addClass('has-active');
+      return
+    }
 
     if (activeTocIndex !== -1 && $toclink[activeTocIndex] != null) {
       $($toclink[activeTocIndex]).addClass('active');
@@ -126,15 +139,21 @@ Even._initToc = function() {
 
 Even.fancybox = function() {
   if ($.fancybox) {
-    $('.post-content').each(function() {
-      $(this).find('img').each(function() {
-        $(this).wrap(`<a class="fancybox" href="${this.src}" data-fancybox="gallery" data-caption="${this.alt}"></a>`);
-      });
-    });
+    $('.post-content img').each(function() {
+        $(this).wrap(`<a class="fancybox" href="${this.src}" 
+          data-fancybox="gallery" data-caption="${this.alt}"></a>`);
+    })
 
-    $('.fancybox').fancybox({
-      selector: '.fancybox',
-      protect: true,
+    $('[data-fancybox="gallery"]').fancybox({
+      toolbar: true,
+      thumbs: {
+        autoStart: true
+      },
+      wheel: 'zoom',
+      animationEffect: "fade",
+      slideShow: {
+        speed: 1500
+      }
     });
   }
 };
@@ -277,3 +296,25 @@ Even.responsiveTable = function() {
   }
 };
 
+Even.bindClick = function() {
+  // use delegate to detect anchor click
+  document.addEventListener('click', function(event) {
+    if (event.target.classList.contains('toc-link')) {
+      achorClicked = true;
+      const $toclink = $('.toc-link');
+      const $headerlink = $('.headerlink');
+      const $tocLinkLis = $('.post-toc-content li');
+      $toclink.removeClass('active');
+      $tocLinkLis.removeClass('has-active');
+      // add active
+      // console.log(event.target)
+      // the target parent add class "has-active"
+      event.target.parentElement.classList.add('has-active');
+      // the target add class "active"
+      event.target.classList.add('active');
+    }
+
+
+
+  })
+}

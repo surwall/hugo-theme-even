@@ -3,6 +3,7 @@ $(document).ready(function () {
   Even.mobileNavbar();
   Even.toc();
   Even.fancybox();
+  Even.bindClick();
 });
 
 Even.responsiveTable();

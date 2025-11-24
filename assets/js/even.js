@@ -138,24 +138,21 @@ Even._initToc = function() {
 };
 
 Even.fancybox = function() {
-  if ($.fancybox) {
-    $('.post-content img').each(function() {
-        $(this).wrap(`<a class="fancybox" href="${this.src}" 
-          data-fancybox="gallery" data-caption="${this.alt}"></a>`);
-    })
-
-    $('[data-fancybox="gallery"]').fancybox({
-      toolbar: true,
-      thumbs: {
-        autoStart: true
+  Fancybox.bind("[data-fancybox]", {
+    Carousel: {
+      Thumbs: {
+        showOnStart: false,
+        // type: "classic"
       },
-      wheel: 'zoom',
-      animationEffect: "fade",
-      slideShow: {
-        speed: 1500
+      Toolbar: {
+        display: {
+          left : ["counter"],
+          right: ["zoomIn", "zoomOut","reset","thumbs",'close']
+        }
       }
-    });
-  }
+    },
+    // placeFocusBack: false
+  });
 };
 
 Even.highlight = function() {

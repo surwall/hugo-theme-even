@@ -1,0 +1,6 @@
+<!-- https://gohugo.io/render-hooks/images/ -->
+<img data-fancybox="gallery" data-caption="{{.PlainText}}"  src="{{ .Destination | safeURL }}"
+  {{- with .PlainText }} alt="{{ . }}"{{ end -}}
+  {{- with .Title }} title="{{ . }}" {{ end -}}
+>
+{{- /* chomp trailing newline */ -}}

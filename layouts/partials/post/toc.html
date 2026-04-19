@@ -3,7 +3,12 @@
   <h2 class="post-toc-title">{{ T "toc" }}</h2>
   {{- $globalAutoCollapseToc := .Site.Params.autoCollapseToc | default false }}
   <div class="post-toc-content{{ if not (or .Params.autoCollapseToc (and $globalAutoCollapseToc (ne .Params.autoCollapseToc false))) }} always-active{{ end }}">
-    {{.TableOfContents}}
+    <!-- {{.TableOfContents}} -->
+    <!-- {{ $startLevel := 2 }} -->
+    {{ $tocStartLevel := .Params.tocStartLevel | default 2 }}
+    {{ $tocEndLevel := .Params.tocEndLevel | default 3 }}
+    {{ $ordered := false }}
+    {{ .Fragments.ToHTML $tocStartLevel $tocEndLevel $ordered }}
   </div>
 </div>
 {{- end }}

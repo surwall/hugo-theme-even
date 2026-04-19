@@ -1,6 +1,12 @@
 .post-toc {
   position: absolute;
   width: $post-toc-width;
+  max-height: 80vh;
+  overflow-y: auto;
+  // hide scrollbar 
+  &::-webkit-scrollbar {
+    display: none;
+  }
   margin-left: $post-toc-margin-left;
   padding: 10px;
   font-family: $global-serif-font-family;

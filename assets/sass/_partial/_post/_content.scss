@@ -5,6 +5,10 @@
 .post-content {
   word-wrap: break-word;
 
+  ol {
+    padding-left: 1.5em;
+  }
+
   // 图片高度
   img {
     max-height: 55vh;

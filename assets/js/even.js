@@ -65,7 +65,7 @@ Even._initToc = function() {
       },
       process: {
         'position': 'fixed',
-        'top': SPACING,
+        'top': SPACING
       },
       end: {
         'position': 'absolute',
@@ -73,15 +73,27 @@ Even._initToc = function() {
       },
     };
 
+    let isEnd = false;
+    let isStart = false;
+
     $(window).scroll(function() {
       const scrollTop = $(window).scrollTop();
 
       if (scrollTop < minScrollTop) {
+        isEnd = false;
+        isStart = true;
         $toc.css(tocState.start);
       } else if (scrollTop > maxScrollTop) {
+        isEnd = true;
+        isStart = false;
         $toc.css(tocState.end);
       } else {
-        $toc.css(tocState.process);
+        isEnd = false;
+        isStart = false;
+        setTimeout(() => {
+          if (isEnd || isStart) return;
+          $toc.css(tocState.process);
+        }, 200);
       }
     });
   }

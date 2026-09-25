@@ -104,6 +104,86 @@ Even._initToc = function() {
   });
 };
 
+// Scroll the article being read into view inside the article list, which is
+// shorter than the list itself on long archives. When the post was entered from
+// a tag page, the list is narrowed down to that tag.
+Even.articleList = function() {
+  const list = document.querySelector('.post-list');
+  if (!list) return;
+
+  const items = list.querySelectorAll('.post-list-content li');
+  const active = list.querySelector('li.active');
+  const tag = active ? Even._articleListTag() : null;
+
+  // Only narrow the list down when the post being read belongs to that tag.
+  if (tag && Even._tagsOf(active).indexOf(tag) !== -1) {
+    items.forEach(function(item) {
+      item.hidden = Even._tagsOf(item).indexOf(tag) === -1;
+    });
+
+    const title = list.querySelector('.post-list-title');
+    if (title) title.textContent = title.textContent + ' · ' + Even._tagName(tag);
+
+    // Keep the tag while browsing the list (`?tag=`), including on reload.
+    const param = 'tag=' + encodeURIComponent(tag);
+    list.querySelectorAll('.post-list-content a').forEach(function(link) {
+      link.search = link.search ? link.search + '&' + param : '?' + param;
+    });
+  }
+
+  if (!active || active.hidden) return;
+
+  const top = active.offsetTop;
+  const bottom = top + active.offsetHeight;
+  if (top < list.scrollTop || bottom > list.scrollTop + list.clientHeight) {
+    list.scrollTop = top - (list.clientHeight - active.offsetHeight) / 2;
+  }
+};
+
+// Tag slug the reader came from, if any: either the `?tag=` carried over by the
+// article list links, or the `/tags/<tag>/` page that linked to this post.
+Even._articleListTag = function() {
+  const param = new URLSearchParams(window.location.search).get('tag');
+  if (param) return param.toLowerCase();
+
+  if (!document.referrer) return null;
+
+  try {
+    const match = new URL(document.referrer).pathname.match(/\/tags\/([^\/]+)\/?$/);
+    return match ? Even._decode(match[1]).toLowerCase() : null;
+  } catch (e) {
+    return null;
+  }
+};
+
+// Tag slugs of an article list item.
+Even._tagsOf = function(item) {
+  return (item.getAttribute('data-tags') || '').trim().split(/\s+/).filter(Boolean)
+    .map(function(tag) { return Even._decode(tag).toLowerCase(); });
+};
+
+// Name of a tag slug, taken from the tags of the post being read.
+Even._tagName = function(tag) {
+  const links = document.querySelectorAll('.post-tags a');
+  for (let i = 0; i < links.length; i++) {
+    const segments = (links[i].getAttribute('href') || '')
+      .replace(/\.html$/, '').replace(/\/+$/, '').split('/');
+    const slug = segments[segments.length - 1];
+    if (slug && Even._decode(slug).toLowerCase() === tag) {
+      return links[i].textContent.trim();
+    }
+  }
+  return tag;
+};
+
+Even._decode = function(value) {
+  try {
+    return decodeURIComponent(value);
+  } catch (e) {
+    return value;
+  }
+};
+
 Even.fancybox = function() {
   Fancybox.bind("[data-fancybox]", {
     Carousel: {

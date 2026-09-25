@@ -2,6 +2,7 @@ $(document).ready(function () {
   Even.backToTop();
   Even.mobileNavbar();
   Even.toc();
+  Even.articleList();
   Even.fancybox();
   Even.bindClick();
 });

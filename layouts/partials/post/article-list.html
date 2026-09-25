@@ -1,0 +1,18 @@
+{{- /* Article list: the left sidebar of a post page, mirroring the toc on the right.
+       Every post is listed, the one being read is highlighted. The tag slugs are
+       exposed so the list can be narrowed down to the tag the reader came from. */ -}}
+{{- $pages := (where .Site.RegularPages "Type" "post").ByDate.Reverse -}}
+{{- if $pages -}}
+<div class="post-list-wrap">
+  <nav class="post-list" id="post-list">
+    <h2 class="post-list-title">{{ T "articleList" }}</h2>
+    <ul class="post-list-content">
+      {{- range $pages -}}
+        <li data-tags="{{ range .Params.tags }}{{ printf "%s " (. | urlize) }}{{ end }}"{{ if eq .RelPermalink $.RelPermalink }} class="active"{{ end }}>
+          <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        </li>
+      {{- end }}
+    </ul>
+  </nav>
+</div>
+{{- end -}}

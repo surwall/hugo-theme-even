@@ -24,7 +24,10 @@
       </div>
     </header>
 
-    <!-- TOC -->
+    <!-- Article list (left gutter) -->
+    {{- partial "post/article-list.html" . -}}
+
+    <!-- TOC (right gutter) -->
     {{- partial "post/toc.html" . -}}
 
     <!-- Outdated Info Warning -->

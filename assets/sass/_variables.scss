@@ -46,7 +46,12 @@ $global-font-color: #34495e !default;
 $global-font-size: 16px !default;
 
 // Global width of '<body>'.
+// Fixed width used on medium screens and the lower bound of the fluid width.
 $global-body-width: 800px !default;
+
+// Max width of '<body>'.
+// On large screens the container grows with the viewport, up to this value.
+$global-body-width-max: 1000px !default;
 
 // Padding of container main
 $global-container-padding: 0 20px !default;
@@ -178,8 +183,36 @@ $post-toc-content: 15px !default;
 // List style of the post toc list.
 $post-toc-list-style: square !default;
 
-// Max screen media of the post toc.
-$toc-max-sreen-width: 2 * $post-toc-width + $post-toc-margin-left !default;
+// Horizontal room the toc needs beside the centered content.
+// The toc is rendered outside the content, so a viewport only fits both when it
+// is at least `$post-toc-gutter-width` wider than the content.
+$post-toc-gutter-width: 2 * ($post-toc-width + $post-toc-gap) !default;
+
+// Max screen media of the post sidebars (toc on the right, article list on the
+// left). Below this they have no room left in the gutters and are hidden.
+$toc-max-sreen-width: $global-body-width + $post-toc-gutter-width !default;
+
+// ========== Article list ========== //
+// Article list of a post page, rendered in the left gutter of the content.
+// Defaults mirror the toc, which sits in the right gutter.
+
+// Width of the article list.
+$post-list-width: $post-toc-width !default;
+
+// Background color of the article list.
+$post-list-backgroud: $post-toc-backgroud !default;
+
+// Gap between the article list and the post content.
+$post-list-gap: $post-toc-gap !default;
+
+// Font size of the article list.
+$post-list-content: $post-toc-content !default;
+
+// Distance from the top of the viewport when the article list sticks.
+$post-list-sticky-top: $post-toc-sticky-top !default;
+
+// Max height of the article list.
+$post-list-max-height: $post-toc-max-height !default;
 
 // ========== Content ========== //
 // Headings anchor.
@@ -299,7 +332,9 @@ $copyright-margin: 10px 0 !default;
 $archive-margin: 2em 0px !default;
 
 // Max width of the archive.
-$archive-max-width: 550px !default;
+// Keeps the archive aligned with the article content, which grows on large
+// screens (see `$global-body-width-max`).
+$archive-max-width: 100% !default;
 
 // Font size of the archive name.
 $archive-name-font-size: 30px !default;

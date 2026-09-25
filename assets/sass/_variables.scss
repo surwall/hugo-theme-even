@@ -184,35 +184,14 @@ $post-toc-content: 15px !default;
 $post-toc-list-style: square !default;
 
 // Horizontal room the toc needs beside the centered content.
-// The toc is rendered outside the content, so a viewport only fits both when it
-// is at least `$post-toc-gutter-width` wider than the content.
+// The toc is rendered outside the content (in the right gutter), so a viewport
+// only fits content and toc when it is at least `$post-toc-gutter-width` wider
+// than the content.
 $post-toc-gutter-width: 2 * ($post-toc-width + $post-toc-gap) !default;
 
-// Max screen media of the post sidebars (toc on the right, article list on the
-// left). Below this they have no room left in the gutters and are hidden.
+// Max screen media of the post toc.
+// Below this the toc has no room left in the gutter and is hidden.
 $toc-max-sreen-width: $global-body-width + $post-toc-gutter-width !default;
-
-// ========== Article list ========== //
-// Article list of a post page, rendered in the left gutter of the content.
-// Defaults mirror the toc, which sits in the right gutter.
-
-// Width of the article list.
-$post-list-width: $post-toc-width !default;
-
-// Background color of the article list.
-$post-list-backgroud: $post-toc-backgroud !default;
-
-// Gap between the article list and the post content.
-$post-list-gap: $post-toc-gap !default;
-
-// Font size of the article list.
-$post-list-content: $post-toc-content !default;
-
-// Distance from the top of the viewport when the article list sticks.
-$post-list-sticky-top: $post-toc-sticky-top !default;
-
-// Max height of the article list.
-$post-list-max-height: $post-toc-max-height !default;
 
 // ========== Content ========== //
 // Headings anchor.

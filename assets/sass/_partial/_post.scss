@@ -8,8 +8,7 @@
 }
 
 .post {
-  // Positioning context of the sidebar wrappers: `.post-list-wrap` (left
-  // gutter) and `.post-toc-wrap` (right gutter).
+  // Positioning context of the sidebar wrapper `.post-toc-wrap`.
   position: relative;
   padding: $post-padding;
 
@@ -19,7 +18,6 @@
 
   @import '_post/header';
   @import '_post/toc';
-  @import '_post/list';
   @import '_post/content';
   @import '_post/copyright';
   @import '_post/reward';

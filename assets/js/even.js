@@ -104,6 +104,29 @@ Even._initToc = function() {
   });
 };
 
+// Fill the fixed bar at the top of the viewport with the reading progress of
+// the post content. The body's own top border covers the same spot until the
+// article is scrolled, so the red line never moves out of view. Uses the DOM
+// API only, so it also works when the jQuery CDN is unreachable.
+Even.readingProgress = function() {
+  const bar = document.getElementById('reading-progress');
+  const content = document.querySelector('.post-content');
+  if (!bar || !content) return;
+
+  const update = function() {
+    const rect = content.getBoundingClientRect();
+    const total = rect.height - window.innerHeight;
+    // Nothing to scroll through (post shorter than the viewport) -> nothing to
+    // report, the bar stays empty instead of showing a full line.
+    const progress = total > 0 ? Math.min(Math.max(-rect.top, 0) / total, 1) : 0;
+    bar.style.transform = 'scaleX(' + progress + ')';
+  };
+
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+};
+
 Even.fancybox = function() {
   Fancybox.bind("[data-fancybox]", {
     Carousel: {

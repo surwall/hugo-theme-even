@@ -13,7 +13,9 @@
   </title>
   {{ partial "head.html" . }}
 </head>
-<body>
+<body{{ if .IsPage }} class="has-reading-progress"{{ end }}>
+  <!-- Reading progress bar, filled by `Even.readingProgress()` (see _base.scss). -->
+  <div class="reading-progress" id="reading-progress"></div>
   {{ partial "slideout.html" . }}
   <div class="container" id="mobile-panel">
     {{ if not .Params.hideHeaderAndFooter -}}

@@ -68,10 +68,12 @@ a {
   margin: 0 auto;
   // Fallback for browsers without `clamp()`.
   width: $global-body-width;
-  // Fluid on large screens: the content grows with the viewport up to
-  // `$global-body-width-max`, while always leaving `$post-toc-gutter-width`
-  // of room beside it for the post toc (which lives outside the content).
-  width: clamp(#{$global-body-width}, calc(100% - #{$post-toc-gutter-width}), #{$global-body-width-max});
+  // The content takes the whole viewport minus the two gutters, so it keeps
+  // growing on large screens instead of capping at a fixed width. The toc is
+  // rendered outside the content, in the right gutter; `$global-body-width` is
+  // the lower bound, which keeps the content readable on narrow viewports
+  // (there the toc no longer fits and is hidden).
+  width: clamp(#{$global-body-width}, calc(100% - #{$post-toc-gutter-width}), 100%);
 }
 
 @include max-screen() {

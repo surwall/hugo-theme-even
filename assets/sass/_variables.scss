@@ -46,12 +46,8 @@ $global-font-color: #34495e !default;
 $global-font-size: 16px !default;
 
 // Global width of '<body>'.
-// Fixed width used on medium screens and the lower bound of the fluid width.
+// Lower bound of the content width: used as the fixed width on medium screens.
 $global-body-width: 800px !default;
-
-// Max width of '<body>'.
-// On large screens the container grows with the viewport, up to this value.
-$global-body-width-max: 1000px !default;
 
 // Padding of container main
 $global-container-padding: 0 20px !default;

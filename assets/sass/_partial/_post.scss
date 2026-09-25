@@ -8,6 +8,8 @@
 }
 
 .post {
+  // Positioning context of `.post-toc-wrap`.
+  position: relative;
   padding: $post-padding;
 
   & + .post {

@@ -1,13 +1,25 @@
-.post-toc {
+// Out-of-flow box, as tall as the post. It gives the TOC inside it a
+// containing block tall enough for real `position: sticky`, while keeping the
+// article content untouched (no placeholder height, no JavaScript involved).
+.post-toc-wrap {
   position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 100%;
+  margin-left: $post-toc-gap;
   width: $post-toc-width;
-  max-height: 80vh;
+}
+
+.post-toc {
+  position: sticky;
+  top: $post-toc-sticky-top;
+  width: $post-toc-width;
+  max-height: $post-toc-max-height;
   overflow-y: auto;
   // hide scrollbar 
   &::-webkit-scrollbar {
     display: none;
   }
-  margin-left: $post-toc-margin-left;
   padding: 10px;
   font-family: $global-serif-font-family;
   border-radius: 5px;
@@ -55,7 +67,7 @@
 }
 
 @include max-screen($toc-max-sreen-width) {
-  .post-toc {
+  .post-toc-wrap {
     display: none;
   }
 }

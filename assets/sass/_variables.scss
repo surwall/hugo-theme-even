@@ -156,7 +156,18 @@ $post-toc-width: 200px !default;
 $post-toc-backgroud: rgba($deputy-color, 0.6) !default;
 
 // Margin left of the post toc.
+// Deprecated: the toc is now placed with `$post-toc-gap`, kept only for
+// backwards compatibility with existing variable overrides.
 $post-toc-margin-left: $global-body-width - 15px !default;
+
+// Gap between the post content and the post toc.
+$post-toc-gap: 25px !default;
+
+// Distance from the top of the viewport when the post toc sticks.
+$post-toc-sticky-top: 20px !default;
+
+// Max height of the post toc.
+$post-toc-max-height: 80vh !default;
 
 // Font size of the post toc title.
 $post-toc-title-size: 20px !default;

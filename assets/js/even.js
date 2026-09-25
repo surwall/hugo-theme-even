@@ -49,55 +49,10 @@ Even.mobileNavbar = function() {
   });
 };
 
+// The toc is pinned by the browser with `position: sticky`
+// (see `assets/sass/_partial/_post/_toc.scss`), so only the
+// "currently reading" highlight is computed here.
 Even._initToc = function() {
-  const SPACING = 20;
-  const $toc = $('.post-toc');
-  const $footer = $('.post-footer');
-
-  if ($toc.length) {
-    const minScrollTop = $toc.offset().top - SPACING;
-    const maxScrollTop = $footer.offset().top - $toc.height() - SPACING;
-
-    const tocState = {
-      start: {
-        'position': 'absolute',
-        'top': minScrollTop,
-      },
-      process: {
-        'position': 'fixed',
-        'top': SPACING
-      },
-      end: {
-        'position': 'absolute',
-        'top': maxScrollTop,
-      },
-    };
-
-    let isEnd = false;
-    let isStart = false;
-
-    $(window).scroll(function() {
-      const scrollTop = $(window).scrollTop();
-
-      if (scrollTop < minScrollTop) {
-        isEnd = false;
-        isStart = true;
-        $toc.css(tocState.start);
-      } else if (scrollTop > maxScrollTop) {
-        isEnd = true;
-        isStart = false;
-        $toc.css(tocState.end);
-      } else {
-        isEnd = false;
-        isStart = false;
-        setTimeout(() => {
-          if (isEnd || isStart) return;
-          $toc.css(tocState.process);
-        }, 200);
-      }
-    });
-  }
-
   const HEADERFIX = 30;
   const $toclink = $('.toc-link');
   const $headerlink = $('.headerlink');
@@ -221,7 +176,8 @@ Even.toc = function() {
     const toc = document.getElementById('TableOfContents');
     if (toc === null) {
       // toc = true, but there are no headings
-      tocContainer.parentNode.removeChild(tocContainer);
+      const tocWrapper = tocContainer.closest('.post-toc-wrap') || tocContainer;
+      tocWrapper.parentNode.removeChild(tocWrapper);
     } else {
       this._refactorToc(toc);
       this._linkToc();
